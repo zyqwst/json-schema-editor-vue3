@@ -10,7 +10,7 @@
               </template>
             </a-button>
             <span v-else style="width:32px;display:inline-block"></span>
-            <a-input :disabled="disabled || root" :default-value="pickKey" class="ant-col-name-input" @blur="onInputName"/>
+            <a-input :disabled="disabled || root" v-model:value="pickKey" class="ant-col-name-input" @blur="onInputName"/>
           </div>
           <a-tooltip v-if="root">
             <template v-slot:title>{{ local['checked_all'] }}</template>
