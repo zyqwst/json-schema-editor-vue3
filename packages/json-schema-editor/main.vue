@@ -374,7 +374,7 @@ export default {
       const p = prop || this.addProp
       let existKey = false
       this.customProps.forEach(item => {
-        if (item.key === prop.key) {
+        if (item.key === p.key) {
           existKey = true
         }
       })
