@@ -10,7 +10,7 @@
               </template>
             </a-button>
             <span v-else style="width:32px;display:inline-block"></span>
-            <a-input :disabled="disabled || root" v-model:value="pickKey" class="ant-col-name-input" @blur="onInputName"/>
+            <a-input :disabled="disabled || root" :default-value="pickKey" class="ant-col-name-input" @blur="onInputName" :key="pickValue"/>
           </div>
           <a-tooltip v-if="root">
             <template v-slot:title>{{ local['checked_all'] }}</template>
@@ -130,7 +130,7 @@
   </div>
 </template>
 <script>
-import { isNull } from './util'
+import { isNull, renamePropertyAndKeepKeyPrecedence } from './util'
 import {TYPE_NAME, TYPE} from './type/type'
 import { Row,Col,Button,Input,InputNumber, Icon,Checkbox,Select,Tooltip,Modal,Form,Switch} from 'ant-design-vue'
 import { CaretRightOutlined,CaretDownOutlined,SettingOutlined,PlusOutlined,CloseOutlined,CheckOutlined } from '@ant-design/icons-vue';
@@ -257,14 +257,17 @@ export default {
     onInputName(e){
       const oldKey = this.pickKey
       const newKey = e.target.value
+
+
       if(oldKey === newKey) return
 
-      const nodeValue = this.parent.properties[oldKey]
+      // const nodeValue = this.parent.properties[oldKey]
 
       // 替换key名
-      delete this.parent.properties[oldKey]
+      // delete this.parent.properties[oldKey]
       // eslint-disable-next-line vue/no-mutating-props
-      this.parent.properties[newKey] = nodeValue
+      // this.parent.properties[newKey] = nodeValue
+      renamePropertyAndKeepKeyPrecedence(this.parent.properties,[oldKey, newKey])
 
       // required重新设置
       const requireds = this.parent.required || []
